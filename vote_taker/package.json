@@ -1,0 +1,22 @@
+{
+  "name": "vote_taker",
+  "version": "1.0.0",
+  "description": "Hackathon project vote tally system",
+  "main": "vote_taker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blittle/hv-tech-hack"
+  },
+  "author": "Dave Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blittle/hv-tech-hack/issues"
+  },
+  "homepage": "https://github.com/blittle/hv-tech-hack",
+  "dependencies": {
+    "twitter": "^0.2.12"
+  }
+}
