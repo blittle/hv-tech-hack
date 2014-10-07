@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+  </head>
+  <body>
+	<div id='temp'></div>
+    <script>
+	var myDataRef = new Firebase('https://crackling-fire-2734.firebaseio.com/');
+      //$('#messageInput').keypress(function (e) {
+       // if (e.keyCode == 13) {
+        //  var name = $('#nameInput').val();
+         // var text = $('#messageInput').val();
+          //myDataRef.set('User ' + name + ' says ' + text);
+    //      $('#messageInput').val('');
+     //   }
+      //});
+
+myDataRef.on('child_added', function(snapshot) {
+var message = snapshot.val();
+if (message.name == 'vote') {
+	$('body').css('background-color', message.text);
+}
+$('#temp').text(message.text);
+});
+    </script>
+  </body>
+</html>
