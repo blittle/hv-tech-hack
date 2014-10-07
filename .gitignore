@@ -1,4 +1,6 @@
 node_modules
 npm-debug.log
 vote_taker/twitter_auth.js
+ar/node_modules
+ar/data
 .*.sw*
