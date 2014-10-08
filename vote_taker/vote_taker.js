@@ -7,7 +7,7 @@ var util = require("util"),
     tallies,
     twitter_stream,
     database = new firebase("https://crackling-fire-2734.firebaseio.com/"),
-    initial_tallies = {red: 0, green: 0, blue: 0};
+    initial_tallies = {nan: 0, uofu: 0, byu: 0};
 
 process.on('exit', function(code) {
     if (twitter_stream) {
