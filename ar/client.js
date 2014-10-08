@@ -1,6 +1,7 @@
 var arDrone = require('ar-drone');
 var async   = require('async');
 var client  = arDrone.createClient();
+var positionReader = require('./positionReader');
 
 var isMoving = false;
 
@@ -10,30 +11,47 @@ var timing = 1000,  // The time it takes for the drone to move from one computer
 exports.start = function(cb) {
     isMoving = true;
     console.log('started');
-    client.on('navdata', console.log);    
-    
-    client.takeoff(function() {
+    // client.on('navdata', console.log);    
 
-        client.stop();
-        console.log('took off')
+    // client.takeoff(function() {
+
+    //     client.stop();
+    //     console.log('took off')
         
-        isMoving = false;
+    //     isMoving = false;
 
-        if(cb) cb();
-    });
+        var stream = client.getPngStream();
+
+        positionReader.start(stream, {
+            left: function() {
+                client.right(.1);
+                // right();
+            },
+            right: function() {
+                client.left(.1);
+                // left();
+            },
+            shutdown: function() {
+                isMoving = true;
+                client.stop();
+                client.land();
+            },
+            stop: function() {
+                client.stop();
+            }
+        })
+    // });
 }
 
-exports.left = function(steps) {
+function left(steps) {
     if(isMoving) return;
-    console.log('moving left', steps);
     isMoving = true;
     client.left(speed);
     setMovingTimeout(steps);
 }
 
-exports.right = function(steps) {
+function right(steps) {
     if(isMoving) return;
-    console.log('moving right', steps);
     isMoving = true;
     client.right(speed);
     setMovingTimeout(steps);
@@ -52,5 +70,5 @@ function setMovingTimeout(steps) {
     setTimeout(function() {
         client.stop();
         isMoving = false;
-    }, steps * timing);
+    }, 1000);
 }

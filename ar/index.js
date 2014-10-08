@@ -5,6 +5,7 @@ var command = process.argv[2];
 var started = false;
 
 if(command == 'start') {
+    console.log('here');
     started = true;
     client.start(function() {
         client.right(4);
