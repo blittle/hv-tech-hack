@@ -1,21 +1,54 @@
 <html>
   <head>
+<link href='http://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
     <script src='https://cdn.firebase.com/js/client/1.0.15/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
 <style type="text/css">
+#banner-border {
+margin-left: 100;
+margin-right: 100;
+border: solid 10px white;
+background-color: white;
+-moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+}
 #banner {
-font-size: large;
+color: white;
+-moz-border-radius: 10px;
+-webkit-border-radius: 10px;
+padding-top: 20px;
+padding-bottom: 20px;
 }
 #myval {
-font-size: xx-large;
+font-size: 100pt;
+width: 100%;
+text-align: center;
+line-height: 110px;
+}
+#help {
+font-size: 50pt;
+width: 100%;
+text-align: center;
+line-height: 55px;
+}
+body {
+font-family: 'Muli', sans-serif;
+width: 100%;
+padding: 0;
+margin: 0;
 }
 </style>
   </head>
   <body>
-<div id='banner'>
-	my val: <span id='myval' style='{font-size: 64pt;}'></span>
+<div id='debug'>
 	name:<span id='name'></span>
 	val:<span id='val'></span>
+</div>
+<div id='banner-border'>
+<div id='banner'>
+	<div id='myval'><span id='theval'></span> (<span id='thecount'></span>)</div>
+	<div id='help'></div>
+</div>
 </div>
     <script>
 var myDataRef = new Firebase('https://crackling-fire-2734.firebaseio.com/');
@@ -34,7 +67,12 @@ function getUrlParameter(sParam)
     }
 } 
 var my_val = getUrlParameter('val');
-$('#myval').text(my_val);
+$('#theval').text(my_val);
+$('#thecount').text('0');
+my_val = my_val.toLowerCase();
+var my_color = getUrlParameter('color');
+$('#banner').css('background-color', my_color);
+$('#help').text('#utahtechweek ' + my_val);
 function handleMessage(snapshot) 
 {
 	var the_val = snapshot.val();
@@ -43,9 +81,13 @@ function handleMessage(snapshot)
 	$('#val').text(the_val);
 	if (the_name == 'winner') {
     		if (the_val == my_val){
-			$('body').css('background-color', 'red');
+			$('body').css('background-color', 'green');
 		} else {
 			$('body').css('background-color', 'white');
+		}
+	} else if (the_name == 'tallies') {
+		if (my_val in the_val) {
+			$('#thecount').text(the_val[my_val]);
 		}
 	}
 }
