@@ -46,7 +46,7 @@ margin: 0;
 </div>
 <div id='banner-border'>
 <div id='banner'>
-	<div id='myval'></div>
+	<div id='myval'><span id='theval'></span> (<span id='thecount'></span>)</div>
 	<div id='help'></div>
 </div>
 </div>
@@ -67,7 +67,8 @@ function getUrlParameter(sParam)
     }
 } 
 var my_val = getUrlParameter('val');
-$('#myval').text(my_val);
+$('#theval').text(my_val);
+$('#thecount').text('0');
 my_val = my_val.toLowerCase();
 var my_color = getUrlParameter('color');
 $('#banner').css('background-color', my_color);
@@ -83,6 +84,10 @@ function handleMessage(snapshot)
 			$('body').css('background-color', 'green');
 		} else {
 			$('body').css('background-color', 'white');
+		}
+	} else if (the_name == 'tallies') {
+		if (my_val in the_val) {
+			$('#thecount').text(the_val[my_val]);
 		}
 	}
 }
